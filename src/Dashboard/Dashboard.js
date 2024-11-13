@@ -60,7 +60,7 @@ function ResponsiveDrawer(props) {
           </ListItem>
         ))}
       </List>
-      <Divider />
+      <Divider sx={{ borderColor: '#555555', borderWidth: '1px' }}/>
       <List>
         {['Profile', 'Preferences', 'Settings'].map((text) => (
           <ListItem key={text} disablePadding>
