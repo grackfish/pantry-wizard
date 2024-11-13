@@ -20,9 +20,9 @@ const drawerWidth = 240;
 
 const routes = {
   Dashboard: '/',
-  Ingredients: '/ingredients',
-  Recipes: '/recipes',
-  Explore: '/explore',
+  'My Ingredients': '/ingredients',
+  'My Recipes': '/recipes',
+  'Explore Recipes': '/explore',
 };
 
 function ResponsiveDrawer(props) {
@@ -54,15 +54,15 @@ function ResponsiveDrawer(props) {
       <List>
         {['Dashboard', 'My Ingredients', 'My Recipes', 'Explore Recipes'].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton sx={{ color: 'white' }}>
-              <ListItemText primary={text} />
-            </ListItemButton>
+          <ListItemButton component={Link} to={routes[text]}>
+            <ListItemText primary={text} />
+          </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['Profile', 'Preferences', 'Settings'].map((text, index) => (
+        {['Profile', 'Preferences', 'Settings'].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton sx={{ color: 'white' }}>
               <ListItemText primary={text} />
@@ -145,7 +145,7 @@ function ResponsiveDrawer(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, backgroundColor: 'black', color: 'white', minHeight: '100vh' }}
       >
         <Toolbar />
-        <Typography sx={{ marginBottom: 2, fontSize: '20px' }}>
+        <Typography sx={{ marginBottom: 2, fontSize: '20px', textAlign: 'center' }}>
           Welcome to Pantry Wizard!
         </Typography>
       </Box>
