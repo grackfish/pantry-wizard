@@ -14,14 +14,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const routes = {
-  Mint: '/dashboard',
-  Transfer: '/transfer',
-  Events: '/events',
   Dashboard: '/',
+  Ingredients: '/ingredients',
+  Recipes: '/recipes',
+  Explore: '/explore',
 };
 
 function ResponsiveDrawer(props) {

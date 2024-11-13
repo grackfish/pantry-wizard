@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from '.App.js';
+import Dashboard from './Dashboard/Dashboard.js';
 import Ingredients from '.Ingredients.js';
 import Recipes from '.Recipes.js';
 import Explore from '.Explore.js';

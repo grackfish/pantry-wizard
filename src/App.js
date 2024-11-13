@@ -1,12 +1,15 @@
-import './App.css';
-import Menu from './Menu.js';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Dashboard from './Dashboard/Dashboard.js';
 
-function App() {
+function Routing() {
   return (
-    <div className="App">
-      <Menu/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 }
 
-export default App;
+export default Routing;
