@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import OwnedTable from './OwnedTable.js';
 
 const drawerWidth = 240;
 
@@ -148,6 +148,7 @@ function ResponsiveDrawer(props) {
         <Typography sx={{ marginBottom: 2, fontSize: '20px', textAlign: 'center' }}>
           Welcome to your ingredients page!
         </Typography>
+        <OwnedTable/>
       </Box>
     </Box>
   );
