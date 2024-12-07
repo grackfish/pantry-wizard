@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import RecipesTable from './RecipesTable.js';
 
 const drawerWidth = 240;
 
@@ -146,8 +146,9 @@ function ResponsiveDrawer(props) {
       >
         <Toolbar />
         <Typography sx={{ marginBottom: 2, fontSize: '20px', textAlign: 'center' }}>
-          Welcome to the explore page!
+          Explore our collection of recipes!
         </Typography>
+        <RecipesTable/>
       </Box>
     </Box>
   );
