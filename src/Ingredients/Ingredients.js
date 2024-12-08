@@ -217,7 +217,7 @@ function ResponsiveDrawer(props) {
           Explore Ingredients
         </Typography>
         <TextField
-          label="Search Explore Ingredients"
+          label="Search All Ingredients"
           variant="outlined"
           fullWidth
           value={searchExploreQuery}
