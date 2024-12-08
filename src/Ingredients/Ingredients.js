@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -12,6 +13,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import OwnedTable from './OwnedIngredientsTable.js';
@@ -30,6 +32,10 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [searchOwnedQuery, setSearchOwnedQuery] = React.useState(''); // For filtering owned ingredients
+  const [ownedIngredients, setOwnedIngredients] = React.useState([]); // Data for owned ingredients
+  const [searchExploreQuery, setSearchExploreQuery] = React.useState(''); // For filtering explore ingredients
+  const [exploreIngredients, setExploreIngredients] = React.useState([]); // Data for explore ingredients
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -46,22 +52,53 @@ function ResponsiveDrawer(props) {
     }
   };
 
+  // Filtered data for tables
+  const filteredOwnedIngredients = ownedIngredients.filter((ingredient) =>
+    ingredient.name.toLowerCase().includes(searchOwnedQuery.toLowerCase())
+  );
+
+  const filteredExploreIngredients = exploreIngredients.filter((ingredient) =>
+    ingredient.name.toLowerCase().includes(searchExploreQuery.toLowerCase())
+  );
+
+  // Handle search submit for owned ingredients
+  const handleSearchSubmitO = () => {
+    // Fetch ingredients data from backend
+    fetch('/api/ingredients')
+      .then((response) => response.json())
+      .then((data) => {
+        setOwnedIngredients(data.owned || []);
+        setExploreIngredients(data.explore || []);
+      });
+  };
+
+  // Handle search submit for explore ingredients
+  const handleSearchSubmitE = () => {
+    // Fetch ingredients data from backend
+    fetch('/api/ingredients')
+      .then((response) => response.json())
+      .then((data) => {
+        setOwnedIngredients(data.owned || []);
+        setExploreIngredients(data.explore || []);
+      });
+  };
+
   const drawer = (
     <div>
-      <Toolbar sx={{ backgroundColor: '#222222' }} >
-        <p style={{fontSize: '25px', margin: '0px'}} >Pantry Wizard</p>
+      <Toolbar sx={{ backgroundColor: '#222222' }}>
+        <p style={{ fontSize: '25px', margin: '0px' }}>Pantry Wizard</p>
       </Toolbar>
-      <Divider/>
+      <Divider />
       <List>
-        {['Dashboard', 'My Ingredients', 'My Recipes', 'Explore Recipes'].map((text, index) => (
+        {['Dashboard', 'My Ingredients', 'My Recipes', 'Explore Recipes'].map((text) => (
           <ListItem key={text} disablePadding>
-          <ListItemButton component={Link} to={routes[text]}>
-            <ListItemText primary={text} />
-          </ListItemButton>
+            <ListItemButton component={Link} to={routes[text]}>
+              <ListItemText primary={text} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider sx={{ borderColor: '#555555', borderWidth: '1px' }}/>
+      <Divider sx={{ borderColor: '#555555', borderWidth: '1px' }} />
       <List>
         {['Profile', 'Preferences', 'Settings'].map((text) => (
           <ListItem key={text} disablePadding>
@@ -115,11 +152,11 @@ function ResponsiveDrawer(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
-              width: drawerWidth, 
-              backgroundColor: '#222222', 
-              color: 'white' 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              backgroundColor: '#222222',
+              color: 'white',
             },
           }}
         >
@@ -129,11 +166,11 @@ function ResponsiveDrawer(props) {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { 
-              boxSizing: 'border-box', 
-              width: drawerWidth, 
-              backgroundColor: '#222222', 
-              color: 'white' 
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              backgroundColor: '#222222',
+              color: 'white',
             },
           }}
           open
@@ -143,13 +180,61 @@ function ResponsiveDrawer(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, backgroundColor: 'black', color: 'white', minHeight: '100vh' }}
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          backgroundColor: 'black',
+          color: 'white',
+          minHeight: '100vh',
+        }}
       >
         <Toolbar />
-        <p>Owned Ingredients</p>
-        <OwnedTable/>
-        <p style={{marginTop: '50px'}}>Explore Ingredients</p>
-        <IngredientsTable/>
+        <Typography variant="h6" gutterBottom>
+          Owned Ingredients
+        </Typography>
+        <TextField
+          label="Search Owned Ingredients"
+          variant="outlined"
+          fullWidth
+          value={searchOwnedQuery}
+          onChange={(e) => setSearchOwnedQuery(e.target.value)}
+          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
+        />
+        {/* Submit Button */}
+        <Box sx={{ textAlign: 'center' }}>
+          <Button
+            variant="contained"
+            onClick={handleSearchSubmitO}
+            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50' }}
+          >
+            Submit Search
+          </Button>
+        </Box>
+        <OwnedTable rows={filteredOwnedIngredients} />
+
+        <Typography variant="h6" gutterBottom style={{ marginTop: '50px' }}>
+          Explore Ingredients
+        </Typography>
+        <TextField
+          label="Search Explore Ingredients"
+          variant="outlined"
+          fullWidth
+          value={searchExploreQuery}
+          onChange={(e) => setSearchExploreQuery(e.target.value)}
+          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
+        />
+        {/* Submit Button */}
+        <Box sx={{ textAlign: 'center' }}>
+          <Button
+            variant="contained"
+            onClick={handleSearchSubmitE}
+            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50'}}
+          >
+            Submit Search
+          </Button>
+        </Box>
+        <IngredientsTable rows={filteredExploreIngredients} />
       </Box>
     </Box>
   );
