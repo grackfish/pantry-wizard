@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { Form } from 'react-router-dom';
 
 // BACKEND: refer to 'field' variable
 const columns = [
@@ -14,7 +15,6 @@ export default function EventsGrid() {
 
   return (
     <Box sx={{ height: 631, width: '99%' }}>
-      <Form>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -81,7 +81,6 @@ export default function EventsGrid() {
           },
         }}
       />
-      </Form>
     </Box>
   );
 }
