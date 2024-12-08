@@ -230,7 +230,7 @@ function ResponsiveDrawer(props) {
         </Typography>
       </Box>
 
-  {/* Right Section: Go to My Ingredient Button */}
+  {/* Right Section: Go to My Ingredients Button */}
   <Box sx={{ flex: 1, textAlign: 'center', background: '#333333'}}>
     <Typography variant="h6" sx={{ marginBottom: 2 }}>
       Ingredients Reminder
@@ -251,7 +251,7 @@ function ResponsiveDrawer(props) {
           border: 'none',
         }}
       >
-        Go to My Ingredient
+        Go to My Ingredients
       </button>
     </Box>
   </Box>
@@ -361,7 +361,7 @@ function ResponsiveDrawer(props) {
             border: 'none',
           }}
         >
-          Go to My Explore
+          Explore New Recipes
         </button>
       </Box>
     </Box>
