@@ -7,8 +7,8 @@ const columns = [
   { field: 'name', headerName: 'Recipe Name', width: 325 },
   { field: 'type', headerName: 'Type of Recipe', width: 175 },
   { field: 'cuisine', headerName: 'Cuisine', width: 175 },
-  { field: 'ingredients', headerName: 'Ingredients', width: 375 },
-  { field: 'preparable', headerName: 'Preparable?', width: 100 },
+  { field: 'ingredients', headerName: 'Ingredients', width: 350 },
+  { field: 'preparable', headerName: 'Preparable?', width: 125 },
 ];
 
 export default function EventsGrid() {
@@ -50,6 +50,9 @@ export default function EventsGrid() {
         rows={rows}
         columns={columns}
         initialState={{
+          sorting: {
+            sortModel: [{ field: 'preparable', sort: 'desc' }], // Default show preparable recipes first
+          },
           pagination: {
             paginationModel: {
               pageSize: 10,
