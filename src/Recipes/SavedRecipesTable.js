@@ -9,16 +9,8 @@ import TextField from '@mui/material/TextField';
 import { DataGrid } from '@mui/x-data-grid';
 import { Typography } from '@mui/material';
 import { Form } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-
-// BACKEND: refer to 'field' variable
-const columns = [
-  { field: 'name', headerName: 'Recipe Name', width: 325 },
-  { field: 'type', headerName: 'Type of Recipe', width: 175 },
-  { field: 'cuisine', headerName: 'Cuisine', width: 175 },
-  { field: 'ingredients', headerName: 'Ingredients', width: 350 },
-  { field: 'preparable', headerName: 'Preparable?', width: 125 },
-];
 
 export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
@@ -29,17 +21,19 @@ export default function EventsGrid() {
   const [newRecipeInstructions, setNewRecipeInstructions] = React.useState('');
   const [selectedRows, setSelectedRows] = React.useState([]); // For removing selected rows
   const [showForm, setShowForm] = React.useState(false); // Control visibility of adding ingredient form 
+  const [selectedRecipe, setSelectedRecipe] = React.useState(null);
+  const navigate = useNavigate(); // React Router navigate hook
 
 
   const handleAddRecipe = () => {
-    if (newRecipeName.trim() && newRecipeType.trim() && newRecipeCuisine.trim() && newRecipeIngredients.trim() && newRecipeInstructions) {
+    if (newRecipeName.trim() && newRecipeType.trim() && newRecipeCuisine.trim() && newRecipeIngredients.trim() && newRecipeInstructions.trim()) {
       const newRecipe = {
         id: rows.length + 1,
         name: newRecipeName,
         type: newRecipeType,
         cuisine: newRecipeCuisine,
         ingredients: newRecipeIngredients,
-        instructions: newRecipeInstructions
+        instructions: newRecipeInstructions,
       };
       setRows([...rows, newRecipe]);
       // Reset input fields
@@ -54,8 +48,8 @@ export default function EventsGrid() {
     setShowForm(false);
   };
 
-  // Remove selected ingredients
-  const handleDeleteSelected = () => {
+   // Remove selected ingredients
+   const handleDeleteSelected = () => {
     if (selectedRows.length === 0) {
       alert('No ingredients selected.');
       return;
@@ -65,6 +59,39 @@ export default function EventsGrid() {
     setRows(remainingRows);
     setSelectedRows([]);
   };
+
+  const handleOpenRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  const handleCloseDialog = () => {
+    setSelectedRecipe(null);
+  };
+
+
+  // BACKEND: refer to 'field' variable
+const columns = [
+  { field: 'name', headerName: 'Recipe Name', width: 400 },
+  { field: 'type', headerName: 'Type of Recipe', width: 400 },
+  { field: 'cuisine', headerName: 'Cuisine', width: 350 },
+  { field: 'ingredients', headerName: 'Ingredients', width: 350 },
+  { field: 'preparable', headerName: 'Preparable?', width: 125 },
+  // Add a column for adding buttons to view recipe
+  {
+    field: 'detial',
+    headerName: 'View Recipe',
+    width: 150,
+    renderCell: (params) => (
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => handleOpenRecipe(params.row)}
+      >
+        View Recipe
+      </Button>
+    ),
+  },
+];
 
   return (  
     <Box>
@@ -122,7 +149,7 @@ export default function EventsGrid() {
             onChange={(e) => setNewRecipeType(e.target.value)}
           />
           <TextField
-            label="Type of Cuisine"
+            label="Cuisine"
             fullWidth
             margin="dense"
             value={newRecipeCuisine}
@@ -156,6 +183,7 @@ export default function EventsGrid() {
               },
             }}
           />
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddRecipe} color="primary">
@@ -167,15 +195,11 @@ export default function EventsGrid() {
         </DialogActions>
       </Dialog>
       
-
     <Box sx={{ height: 631, width: '99%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         initialState={{
-          sorting: {
-            sortModel: [{ field: 'preparable', sort: 'desc' }], // Default show preparable recipes first
-          },
           pagination: {
             paginationModel: {
               pageSize: 10,
@@ -186,10 +210,7 @@ export default function EventsGrid() {
         checkboxSelection
         disableRowSelectionOnClick
         localeText={{
-            noRowsLabel: 'No recipes saved. Create a new recipe or check out the explore tab to save some recipes and get started!',
-        }}
-        onRowSelectionModelChange={(newSelection) => {
-          setSelectedRows(newSelection); // Update the selected rows state
+            noRowsLabel: 'No recipes saved. Check out the explore tab to save some recipes and get started!',
         }}
         sx={{
           '& .MuiDataGrid-cell': {
@@ -242,6 +263,26 @@ export default function EventsGrid() {
         }}
       />
     </Box>
+    {/* Recipe Detail Dialog */}
+    <Dialog open={selectedRecipe !== null} onClose={handleCloseDialog}>
+        <DialogTitle>Recipe Details</DialogTitle>
+        <DialogContent>
+          {selectedRecipe && (
+            <Box>
+              <Typography variant="body1">Name: {selectedRecipe.name}</Typography>
+              <Typography variant="body1">Type: {selectedRecipe.type}</Typography>
+              <Typography variant="body1">Cuisine: {selectedRecipe.cuisine}</Typography>
+              <Typography variant="body1">Ingredients: {selectedRecipe.ingredients}</Typography>
+              <Typography variant="body1">Instructions: {selectedRecipe.instructions}</Typography>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="secondary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box> 
     
   );
