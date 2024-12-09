@@ -1,7 +1,4 @@
 - HIGH PRIO: USER CAN VIEW RECIPE WHEN THEY SELECT IT
-- Add ingredient expiration column to ingredients table
 - Add buttons to let user add or delete owned ingredients and saved recipes
-- Remove search bars above tables since they already have built in filter functions
 - Need to test querying with backend populated data
 - Need to test adding recipes and ingredients to the owned recipes and saved ingredients tables with backend populated data
-- Rename ingredients tab to "pantry"
