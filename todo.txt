@@ -1,6 +1,7 @@
 - HIGH PRIO: MAKE IT SO USER CAN VIEW RECIPE WHEN THEY SELECT IT
 
 - Debug buttons to let user add or delete owned ingredients and saved recipes
+- Maybe delete the image category for the recipe tables, not necessary for now
 - Need to test querying with backend populated data
 - Need to test adding recipes and ingredients to the owned recipes
   and saved ingredients tables with backend populated data
