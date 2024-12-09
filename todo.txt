@@ -2,6 +2,10 @@
 
 - Add buttons to let user add or delete owned ingredients and saved recipes
 - Need to test querying with backend populated data
-- Need to test adding recipes and ingredients to the owned recipes and saved ingredients tables with backend populated data
+- Need to test adding recipes and ingredients to the owned recipes
+  and saved ingredients tables with backend populated data
 
+(- low prio: we do not need separate tables for preparable recipes vsall saved recipes,
+   we can just set default sorting to show preparable recipes at the top of the table)
+   
 (- super low prio: move table with all website ingredients to explore tab)
