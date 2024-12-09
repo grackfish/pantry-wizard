@@ -15,7 +15,7 @@ export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]); // For selected rows
 
-  // Save selected ingredients
+  // Save selected recipes
   const handleSaveSelected = () => {
     if (selectedRows.length === 0) {
       alert('No recipes selected.');

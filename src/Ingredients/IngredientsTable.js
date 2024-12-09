@@ -14,8 +14,38 @@ const columns = [
 
 export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
+  const [selectedRows, setSelectedRows] = React.useState([]); // For selected rows
+
+  // Save selected ingredients
+  const handleSaveSelected = () => {
+    if (selectedRows.length === 0) {
+      alert('No ingredients selected.');
+      return;
+    }
+    
+    return; // BACKEND TO-DO
+  };
 
   return (
+    <Box>
+      <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
+        {/* Save Ingredients Button */}
+        <button
+          onClick={handleSaveSelected}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            borderRadius: '5px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+          }}
+        >
+          Save Selected Ingredients
+        </button>
+      </div>
+
     <Box sx={{ height: 631, width: '99%' }}>
  
       <DataGrid
@@ -84,6 +114,7 @@ export default function EventsGrid() {
           },
         }}
       />
+    </Box>
     </Box>
   );
 }
