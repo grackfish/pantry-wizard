@@ -31,8 +31,6 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [searchAllRecipesQuery, setSearchAllRecipesQuery] = React.useState(''); // For filtering all recipes
-  const [allRecipes, setAllRecipes] = React.useState([]); // Data for all recipes
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -49,20 +47,6 @@ function ResponsiveDrawer(props) {
     }
   };
 
-  // Filtered data for table
-  const filteredAllRecipes = allRecipes.filter((recipe) =>
-    recipe.name.toLowerCase().includes(searchAllRecipesQuery.toLowerCase())
-  );
-
-  // Handle search submit for all recipes
-  const handleSearchSubmit = () => {
-    // Fetch all recipe data from backend
-    fetch('/api/explorerecipes')
-      .then((response) => response.json())
-      .then((data) => {
-        setAllRecipes(data.owned || []);
-      });
-  };
 
   const drawer = (
     <div>
@@ -167,26 +151,7 @@ function ResponsiveDrawer(props) {
         <Typography sx={{ marginBottom: 2, fontSize: '20px', textAlign: 'center' }} variant="h6" gutterBottom>
           Explore our collection of recipes!
         </Typography>
-
-        <TextField
-          label="Search All Recipes"
-          variant="outlined"
-          fullWidth
-          value={searchAllRecipesQuery}
-          onChange={(e) => setSearchAllRecipesQuery(e.target.value)}
-          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
-        />
-        {/* Submit Button */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleSearchSubmit}
-            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50' }}
-          >
-            Submit Search
-          </Button>
-        </Box>
-        <RecipesTable rows={filteredAllRecipes} />
+        <RecipesTable/>
       </Box>
     </Box>
   );
