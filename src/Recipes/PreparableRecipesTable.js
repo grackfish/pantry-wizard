@@ -28,7 +28,7 @@ export default function EventsGrid() {
         checkboxSelection
         disableRowSelectionOnClick
         localeText={{
-            noRowsLabel: 'No recipes saved. Check out the explore tab to save some recipes and get started!',
+            noRowsLabel: 'No preparable recipes. Check out the explore tab to save some new recipes, or update your pantry with ingredients!',
         }}
         sx={{
           '& .MuiDataGrid-cell': {
