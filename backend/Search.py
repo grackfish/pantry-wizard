@@ -11,7 +11,7 @@ class SearchQuery:
         multiplier = self.filters["servings"]
         cuisine = self.filters["cuisine"]
         expanded = self.filters["scope"]
-        required = self.filters["required"]
+        required_ingredients = self.filters["required"]
         self.recipes += Database.getRecipe()
     
     def displayRecipes(self):

@@ -2,9 +2,10 @@ import Database
 from Ingredient import Ingredient
 
 class Recipe:
-    def __init__(self, id:int, name:str, ingredients:dict[str, Ingredient], cookTime:int, labels:set[str], saves:int, instructions:str):
+    def __init__(self, id:int, name:str, creatorID:int, ingredients:dict[str, Ingredient], cookTime:int, labels:set[str], saves:int, instructions:str):
         self.id = id
         self.name = name
+        self.creatorID = creatorID
         self.ingredients = ingredients
         self.instructions = instructions
         self.cookTime = cookTime
@@ -28,6 +29,9 @@ class Recipe:
 
     def getSaves(self):
         return self.saves
+    
+    def getCreator(self):
+        return self.creatorID
 
     def addLabel(self, new_label:str):
         if new_label in self.labels:

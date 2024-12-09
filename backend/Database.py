@@ -1,28 +1,152 @@
 """Database API"""
+import os
+import mysql.connector
+from dotenv import load_dotenv
+from Ingredient import Ingredient
 
-def getUser():
-    pass
-def addUser():
-    pass
-def updateUser():
-    pass
+# Connects to the database
+def connectDatabase():
+    load_dotenv()
 
-def getRecipe():
-    pass
+    username = os.environ.get("USERNAME")
+    password = os.environ.get("PASSWORD")
+
+    sql_connector = mysql.connector.connect(user=username, password=password,
+                                host='127.0.0.1', database="pantry")
+    if sql_connector.is_connected():
+        return sql_connector
+    else:
+        raise Exception("Error connecting to database")
+    
+# Returns the row with the user if the user exists else None
+def getUser(username:str, password:str):
+    db = connectDatabase()
+    with db.cursor() as cursor:
+        query = ("SELECT * FROM users WHERE username=%s AND password=%s LIMIT 1")
+        payload = (username, password)
+        cursor.execute(query, payload)
+        rows = cursor.fetchall()
+    db.close()
+    return None if not rows else rows[0]
+    
+# Returns True if the user is successfully registered else False
+def addUser(username:str, password:str):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        add_user = (
+            "INSERT INTO users"
+            "(username, password)"
+            "VALUES (%s, %s)"
+        )
+        data = (username, password)
+        try:
+            cursor.execute(add_user, data)
+            db.commit()
+        except:
+            success = False
+    db.close()
+    return success
+
+
+def updateUser(username:str, new_password:str):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        update_user = (
+            "UPDATE users "
+            "SET PASSWORD=%s "
+            "WHERE USERNAME=%s;"
+        )
+        data = (new_password, username)
+        try:
+            cursor.execute(update_user, data)
+            db.commit()
+        except:
+            success = False
+    db.close()
+    return success
+
+def getRecipes():
+    db = connectDatabase()
+    with db.cursor() as cursor:
+        pass
+    db.close()
+
 def addRecipe():
-    pass
+    db = connectDatabase()
+    db.close()
+
 def updateRecipe():
-    pass
+    db = connectDatabase()
+    db.close()
+
 def removeRecipe():
-    pass
+    db = connectDatabase()
+    db.close()
 
 
 def getIngredients(user_id):
-    return
-def addIngredient(user_id, ingredient):
-    return
-def updateIngredient(user_id, ingredient):
-    return
-def removeIngredient(user_id, ingredient):
-    return
+    db = connectDatabase()
+    with db.cursor() as cursor:
+        query = (
+            "SELECT * FROM Inventory WHERE owner=%s"
+        )
+        data = [user_id]
+        cursor.execute(query, data)
+        rows = cursor.fetchall()
+    db.close()
+    return None if not rows else rows
 
+def addIngredient(ingredient:Ingredient):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        add_ingredient = (
+            "INSERT INTO Inventory"
+            "(name,owner,quantity,unit,shelf_life,intake)"
+            "VALUES (%s, %s, %s, %s, %s, %s)"
+        )
+        data = ingredient.toTuple()
+        try:
+            cursor.execute(add_ingredient, data)
+            db.commit()
+        except:
+            success = False
+    db.close()
+    return success
+
+def updateIngredient(ingredient:Ingredient):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        update_ingredient = (
+            "UPDATE Inventory "
+            "SET quantity=%s,unit=%s,shelf_life=%s,intake=%s"
+            "WHERE name=%s AND owner=%s;"
+        )
+        data = ingredient.toTuple()[2:] + ingredient.toTuple()[:2]
+        try:
+            cursor.execute(update_ingredient, data)
+            db.commit()
+        except:
+            success = False
+    db.close()
+    return success
+
+def removeIngredient(ingredient:Ingredient):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        delete_ingredient = (
+            "DELETE FROM Inventory "
+            "WHERE name=%s AND owner=%s;"
+        )
+        data = ingredient.toTuple()[:2]
+        try:
+            cursor.execute(delete_ingredient, data)
+            db.commit()
+        except:
+            success = False
+    db.close()
+    return success

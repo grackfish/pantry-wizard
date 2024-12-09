@@ -1,14 +1,16 @@
+from datetime import date
+
 class Ingredient:
-    def __init__(self, id, name, quantity, unit, shelfLife, intakeTime):
-        self.id = id
+    def __init__(self, name:str, owner_id:int, quantity:int, unit:str, shelfLife:int, intakeTime:date):
+        self.owner = owner_id
         self.name = name
         self.quantity = quantity
         self.units = unit
         self.shelfLife = shelfLife
         self.intakeTime = intakeTime
     
-    def getID(self):
-        return self.id
+    def getOwner(self):
+        return self.owner
     
     def getName(self):
         return self.name
@@ -28,4 +30,13 @@ class Ingredient:
     def setShelfLife(self, new_shelfLife):
         self.shelfLife = new_shelfLife
 
+    def toTuple(self):
+        return (
+            self.name,
+            self.owner,
+            self.quantity,
+            self.units,
+            self.shelfLife,
+            self.intakeTime
+        )
     
