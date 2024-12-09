@@ -34,6 +34,9 @@ export default function EventsGrid() {
     { id: 19, name: 'Flour', amount: '3 kg', type: 'Grains', expiration: '2024-12-20' },
     { id: 20, name: 'Sugar', amount: '1 kg', type: 'Condiments', expiration: '2024-12-02' },
     { id: 21, name: 'Butter', amount: '3', type: 'Dairy', expiration: '2024-12-20' },
+    { id: 22, name: 'Tea', amount: '10', type: 'Drink', expiration: '2024-12-20' },
+    { id: 23, name: 'Milk', amount: '1 gal', type: 'Drink', expiration: '2024-12-30' },
+    { id: 24, name: 'Cheddar cheese', amount: '1 lb', type: 'Dairy', expiration: '2024-12-11' },
   ]);
   const [ingredientInput, setIngredientInput] = React.useState({ name: '', amount: '', type: '', expiration:'' });  // Allowing user to input ingredient data
   const [showForm, setShowForm] = React.useState(false); // Control visibility of adding ingredient form 
@@ -91,7 +94,7 @@ export default function EventsGrid() {
               border: 'none',
             }}
           >
-            Manually Add New Ingredient
+            Add New Ingredient
           </button>
         )}
 

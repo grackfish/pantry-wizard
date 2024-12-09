@@ -12,7 +12,18 @@ const columns = [
 ];
 
 export default function EventsGrid() {
-  const [rows, setRows] = React.useState([]);
+  const [rows, setRows] = React.useState([
+    { id: 1, name: 'Simple Salad', type: 'Salad', cuisine: 'None', ingredients: 'Cheese, lettuce, ranch', preparable: '', instructions: 'Combine all ingredients and mix'},
+    { id: 2, name: 'Pizza', type: 'Main', cuisine: 'Italian', ingredients: 'Flour, yeast, water, salt, tomato sauce, mozzarella cheese', preparable: '', instructions: 'Mix dough ingredients and let rise for an hour. Preheat oven to 400 degrees. Assemble pizza and cook for 20 minutes.'},
+    { id: 3, name: 'Blueberry Pie', type: 'Dessert', cuisine: 'American', ingredients: 'Flour, water, butter, salt, blueberries, corn starch,  sugar', preparable: '', instructions: 'Mix dough ingredients in food processer until the consistency of wet sand. Roll out into a half inch disks and refrigerate dough. While dough is chilling, preheat oven to 375 degrees. Cook filling ingredients on stovetop over medium heat. Remove dough from fridge and place in pie dish. Add filling and cook for 40 minutes or until done.'},
+    { id: 4, name: 'Greek Salad', type: 'Salad', cuisine: 'Greek', ingredients: 'Lettuce, olives, feta cheese, onion, tomato. ', preparable: '', instructions: 'Chop vegetables and toss to combine'},
+    { id: 5, name: 'Pasta', type: 'Main', cuisine: 'Italian', ingredients: 'Pasta, tomato sauce, water', preparable: '', instructions: 'Boil a sufficient amount of water on stove. Add pasta and cook per box instructions. Add sauce and wallow in despair at the only meal you can afford.'},
+    { id: 6, name: 'Toast', type: 'Breakfast', cuisine: 'None', ingredients: 'Bread', preparable: '', instructions: 'Put bread in toaster for desired amount of time.'},
+    { id: 7, name: 'Omelette', type: 'Breakfast', cuisine: 'French', ingredients: 'Eggs, butter, tomato, peppers, spinach, garlic, onion, cheese', preparable: '', instructions: 'Chop vegetables. Sautee onion and garlic in butter, then add other vegetables and cook for two more minutes. Remove vegetables into bowl. Put mixed eggs in pan and cook until becoming opaque. Add vegetables and cheese and fold egg over top. Cook until egg is done.'},
+    { id: 8, name: 'Milk tea', type: 'Drink', cuisine: 'Asian', ingredients: 'milk, tea, sugar', preparable: '', instructions: 'Boil tea and strain. Add in milk and sugar. Mix well and enjoy.'},
+    { id: 9, name: 'Strawberry Smoothie', type: 'Drink', cuisine: 'None', ingredients: 'Strawberry, milk', preparable: '', instructions: 'Rinse and chop strawberries. Add milk and chopped strawberries to a blender and blend until desired consistency.'},
+
+  ]);
   const [selectedRows, setSelectedRows] = React.useState([]); // For selected rows
 
   // Save selected recipes
