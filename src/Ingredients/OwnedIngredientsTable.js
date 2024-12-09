@@ -31,9 +31,9 @@ export default function EventsGrid() {
     { id: 16, name: 'Pork', amount: '3', type: 'Meat', expiration: '2024-12-20' },
     { id: 17, name: 'Egg', amount: '12', type: 'Dairy', expiration: '2024-12-02' },
     { id: 18, name: 'Bread', amount: '3', type: 'Grains', expiration: '2024-12-20' },
-    { id: 16, name: 'Flour', amount: '3 kg', type: 'Grains', expiration: '2024-12-20' },
-    { id: 17, name: 'Sugar', amount: '1 kg', type: 'Condiments', expiration: '2024-12-02' },
-    { id: 18, name: 'Butter', amount: '3', type: 'Dairy', expiration: '2024-12-20' },
+    { id: 19, name: 'Flour', amount: '3 kg', type: 'Grains', expiration: '2024-12-20' },
+    { id: 20, name: 'Sugar', amount: '1 kg', type: 'Condiments', expiration: '2024-12-02' },
+    { id: 21, name: 'Butter', amount: '3', type: 'Dairy', expiration: '2024-12-20' },
   ]);
   const [ingredientInput, setIngredientInput] = React.useState({ name: '', amount: '', type: '', expiration:'' });  // Allowing user to input ingredient data
   const [showForm, setShowForm] = React.useState(false); // Control visibility of adding ingredient form 
@@ -184,6 +184,9 @@ export default function EventsGrid() {
             paginationModel: {
               pageSize: 10,
             },
+          },
+          sorting: {
+            sortModel: [{ field: 'name', sort: 'asc' }], // Default alphabetical sorting by 'name'
           },
         }}
         pageSizeOptions={[10]}
