@@ -163,3 +163,5 @@ def removeIngredient(ingredient:Ingredient):
             success = False
     db.close()
     return success
+
+print(getRecipes())

@@ -41,7 +41,6 @@ class Inventory:
         for name, owner, amt, unit, shelfLife, intakeDate in ingredients:
             self.ingredients[name] = Ingredient(name=name, owner_id=owner, quantity=int(amt), unit=unit, shelfLife=shelfLife, intakeTime=intakeDate)
         
-        
     def checkExpiration(self):
         today = date.today()
         warning = []
@@ -56,3 +55,26 @@ class Inventory:
         for ingredient in removed:
             self.removeIngredient(ingredient_name=ingredient.name, quantity=ingredient.quantity)
         return removed, warning
+
+    def searchRecipes(self):
+        recipes = Database.getRecipes()
+        out = []
+        for _, name, ingredients, instructions, _, cuisine, dishType in recipes:
+            ingredients = ingredients.strip("{}")
+            pairs = ingredients.split(",")
+            d = dict()
+            for p in pairs:
+                left, right = p.split(":")
+                left = left.strip()
+                left = left.strip("\"")
+                right = right.strip()
+                right = right.strip("\"")
+                right = right.strip()
+                d[left] = int(right)
+            out.append([name, ingredients, instructions, cuisine, dishType])
+            for k in d:
+                if k not in self.ingredients or self.ingredients[k].getQuantity() < d[k]:
+                    out.pop()
+                    break
+        return out
+        

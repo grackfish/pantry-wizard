@@ -9,6 +9,16 @@ class Recipe:
         self.instructions = instructions
         self.cuisine = cuisine
         self.type = dishType
+        
+    def __init__(self, t):
+        id, name, creatorID, ingredients, cuisine, dishType, instructions = t
+        self.id = id
+        self.name = name
+        self.creatorID = creatorID
+        self.ingredients = ingredients
+        self.instructions = instructions
+        self.cuisine = cuisine
+        self.type = dishType
     
     def getId(self):
         return self.id
