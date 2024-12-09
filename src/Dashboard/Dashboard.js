@@ -199,9 +199,6 @@ function ResponsiveDrawer(props) {
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
           Don't forget to check your pantry! Ensure you have: 
         </Typography>
-        <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          THIS SECTION IS TBD
-        </Typography>
         <List sx={{ textAlign: 'center', margin: '0 auto' }}>
           <ListItem disablePadding>
             <ListItemText primary="Needed condiment" sx={{ textAlign: 'center' }} />
