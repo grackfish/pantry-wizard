@@ -16,8 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import PreparableRecipesTable from './PreparableRecipesTable.js';
-import SavedRecipesTable from './SavedRecipesTable.js';
+import PreparableRecipesTable from './SavedRecipesTable.js';
 
 const drawerWidth = 240;
 
@@ -149,13 +148,9 @@ function ResponsiveDrawer(props) {
       >
         <Toolbar/>
         <Typography variant="h6" gutterBottom>
-          Your Preparable Recipes
+          Your Saved Recipes
         </Typography>
         <PreparableRecipesTable/>
-        <Typography variant="h6" gutterBottom style={{ marginTop: '50px' }}>
-          All Your Saved Recipes
-        </Typography>
-        <SavedRecipesTable/>
       </Box>
     </Box>
   );
