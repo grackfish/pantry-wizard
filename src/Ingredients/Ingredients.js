@@ -32,10 +32,6 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [searchOwnedQuery, setSearchOwnedQuery] = React.useState(''); // For filtering owned ingredients
-  const [ownedIngredients, setOwnedIngredients] = React.useState([]); // Data for owned ingredients
-  const [searchExploreQuery, setSearchExploreQuery] = React.useState(''); // For filtering explore ingredients
-  const [exploreIngredients, setExploreIngredients] = React.useState([]); // Data for explore ingredients
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -50,37 +46,6 @@ function ResponsiveDrawer(props) {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }
-  };
-
-  // Filtered data for tables
-  const filteredOwnedIngredients = ownedIngredients.filter((ingredient) =>
-    ingredient.name.toLowerCase().includes(searchOwnedQuery.toLowerCase())
-  );
-
-  const filteredExploreIngredients = exploreIngredients.filter((ingredient) =>
-    ingredient.name.toLowerCase().includes(searchExploreQuery.toLowerCase())
-  );
-
-  // Handle search submit for owned ingredients
-  const handleSearchSubmitO = () => {
-    // Fetch ingredients data from backend
-    fetch('/api/ingredients')
-      .then((response) => response.json())
-      .then((data) => {
-        setOwnedIngredients(data.owned || []);
-        setExploreIngredients(data.explore || []);
-      });
-  };
-
-  // Handle search submit for explore ingredients
-  const handleSearchSubmitE = () => {
-    // Fetch ingredients data from backend
-    fetch('/api/ingredients')
-      .then((response) => response.json())
-      .then((data) => {
-        setOwnedIngredients(data.owned || []);
-        setExploreIngredients(data.explore || []);
-      });
   };
 
   const drawer = (
@@ -193,48 +158,11 @@ function ResponsiveDrawer(props) {
         <Typography variant="h6" gutterBottom>
           Owned Ingredients
         </Typography>
-        <TextField
-          label="Search Owned Ingredients"
-          variant="outlined"
-          fullWidth
-          value={searchOwnedQuery}
-          onChange={(e) => setSearchOwnedQuery(e.target.value)}
-          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
-        />
-        {/* Submit Button */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleSearchSubmitO}
-            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50' }}
-          >
-            Submit Search
-          </Button>
-        </Box>
-        <OwnedTable rows={filteredOwnedIngredients} />
-
+        <OwnedTable/>
         <Typography variant="h6" gutterBottom style={{ marginTop: '50px' }}>
           Explore Ingredients
         </Typography>
-        <TextField
-          label="Search All Ingredients"
-          variant="outlined"
-          fullWidth
-          value={searchExploreQuery}
-          onChange={(e) => setSearchExploreQuery(e.target.value)}
-          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
-        />
-        {/* Submit Button */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleSearchSubmitE}
-            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50'}}
-          >
-            Submit Search
-          </Button>
-        </Box>
-        <IngredientsTable rows={filteredExploreIngredients} />
+        <IngredientsTable/>
       </Box>
     </Box>
   );
