@@ -23,7 +23,7 @@ const drawerWidth = 240;
 
 const routes = {
   Dashboard: '/',
-  'My Ingredients': '/ingredients',
+  'My Pantry': '/pantry',
   'My Recipes': '/recipes',
   'Explore Recipes': '/explore',
 };
@@ -55,7 +55,7 @@ function ResponsiveDrawer(props) {
       </Toolbar>
       <Divider />
       <List>
-        {['Dashboard', 'My Ingredients', 'My Recipes', 'Explore Recipes'].map((text) => (
+        {['Dashboard', 'My Pantry', 'My Recipes', 'Explore Recipes'].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton component={Link} to={routes[text]}>
               <ListItemText primary={text} />
@@ -98,7 +98,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            My Ingredients
+            My Pantry
           </Typography>
         </Toolbar>
       </AppBar>
