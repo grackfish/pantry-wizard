@@ -183,6 +183,9 @@ export default function EventsGrid() {
         localeText={{
             noRowsLabel: 'No recipes saved. Create a new recipe or check out the explore tab to save some recipes and get started!',
         }}
+        onRowSelectionModelChange={(newSelection) => {
+          setSelectedRows(newSelection); // Update the selected rows state
+        }}
         sx={{
           '& .MuiDataGrid-cell': {
             color: 'white', // Set content text color to white
