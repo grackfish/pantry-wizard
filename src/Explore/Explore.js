@@ -148,8 +148,8 @@ function ResponsiveDrawer(props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, backgroundColor: 'black', color: 'white', minHeight: '100vh' }}
       >
         <Toolbar />
-        <Typography sx={{ marginBottom: 2, fontSize: '20px', textAlign: 'center' }} variant="h6" gutterBottom>
-          Explore our collection of recipes!
+        <Typography variant="h6" gutterBottom>
+          Explore Pantry Wizard's Collection of Recipes!
         </Typography>
         <RecipesTable/>
       </Box>

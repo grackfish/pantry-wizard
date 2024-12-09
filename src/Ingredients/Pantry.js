@@ -160,7 +160,7 @@ function ResponsiveDrawer(props) {
         </Typography>
         <OwnedTable/>
         <Typography variant="h6" gutterBottom style={{ marginTop: '50px' }}>
-          Explore All Ingredients
+          Explore Pantry Wizard's Collection of Ingredients!
         </Typography>
         <IngredientsTable/>
       </Box>
