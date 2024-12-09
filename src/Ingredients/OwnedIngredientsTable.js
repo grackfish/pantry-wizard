@@ -5,10 +5,10 @@ import { Typography } from '@mui/material';
 import { Form } from 'react-router-dom';
 
 const columns = [
-  { field: 'name', headerName: 'Ingredient Name', width: 400 },
-  { field: 'amount', headerName: 'Ingredient Amount', width: 400 },
-  { field: 'type', headerName: 'Ingredient Type', width: 350 },
-  { field: 'expiration', headerName: 'Expiration Date', width: 350 },
+  { field: 'name', headerName: 'Ingredient Name', width: 350 },
+  { field: 'amount', headerName: 'Ingredient Amount', width: 300 },
+  { field: 'type', headerName: 'Ingredient Type', width: 300 },
+  { field: 'expiration', headerName: 'Expiration', width: 200 },
 ];
 
 export default function EventsGrid() {
@@ -69,7 +69,7 @@ export default function EventsGrid() {
               border: 'none',
             }}
           >
-            Add New Ingredient
+            Manually Add New Ingredient
           </button>
         )}
 
