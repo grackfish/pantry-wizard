@@ -129,7 +129,7 @@ export default function EventsGrid() {
             <input
               type="date"
               name="expiration"
-              value={ingredientInput.type}
+              value={ingredientInput.expiration}
               onChange={handleInputChange}
               placeholder="Expiration Date(e.g., 2022-12-31)"
               style={{ padding: '10px', fontSize: '16px' }}
@@ -174,7 +174,7 @@ export default function EventsGrid() {
         onRowSelectionModelChange={(newSelection) => {
           setSelectedRows(newSelection); // Update the selected rows state
         }}
-        
+
         sx={{
           '& .MuiDataGrid-cell': {
             color: 'white', // Set content text color to white
