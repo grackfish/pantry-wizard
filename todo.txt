@@ -1,6 +1,6 @@
 - HIGH PRIO: MAKE IT SO USER CAN VIEW RECIPE WHEN THEY SELECT IT
 
-- Add buttons to let user add or delete owned ingredients and saved recipes
+- Debug buttons to let user add or delete owned ingredients and saved recipes
 - Need to test querying with backend populated data
 - Need to test adding recipes and ingredients to the owned recipes
   and saved ingredients tables with backend populated data
