@@ -32,10 +32,6 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const [searchPreparableRecipesQuery, setSearchPreparableRecipesQuery] = React.useState(''); // For filtering preparable recipes
-  const [preparableRecipes, setPreparableRecipes] = React.useState([]); // Data for preparable recipes
-  const [searchSavedRecipesQuery, setSearchSavedRecipesQuery] = React.useState(''); // For filtering all saved recipes
-  const [savedRecipes, setSavedRecipes] = React.useState([]); // Data for all saved recipes
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -50,37 +46,6 @@ function ResponsiveDrawer(props) {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }
-  };
-
-  // Filtered data for tables
-  const filteredPreparableRecipes = preparableRecipes.filter((recipe) =>
-    recipe.name.toLowerCase().includes(searchPreparableRecipesQuery.toLowerCase())
-  );
-
-  const filteredSavedRecipes = savedRecipes.filter((recipe) =>
-    recipe.name.toLowerCase().includes(searchSavedRecipesQuery.toLowerCase())
-  );
-
-  // Handle search submit for preparable recipes
-  const handleSearchSubmitP = () => {
-    // Fetch saved recipes data from backend
-    fetch('/api/savedrecipes')
-      .then((response) => response.json())
-      .then((data) => {
-        setPreparableRecipes(data.owned || []);
-        setSavedRecipes(data.explore || []);
-      });
-  };
-
-  // Handle search submit for all saved recipes
-  const handleSearchSubmitS = () => {
-    // Fetch saved recipes data from backend
-    fetch('/api/savedrecipes')
-    .then((response) => response.json())
-    .then((data) => {
-      setPreparableRecipes(data.owned || []);
-      setSavedRecipes(data.explore || []);
-    });
   };
 
   const drawer = (
@@ -182,51 +147,15 @@ function ResponsiveDrawer(props) {
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }, backgroundColor: 'black', color: 'white', minHeight: '100vh' }}
       >
-        <Toolbar />
-        <p>Your Preparable Recipes</p>
-
-        <TextField
-          label="Search Preparable Recipes"
-          variant="outlined"
-          fullWidth
-          value={searchPreparableRecipesQuery}
-          onChange={(e) => setSearchPreparableRecipesQuery(e.target.value)}
-          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
-        />
-        {/* Submit Button */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleSearchSubmitP}
-            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50' }}
-          >
-            Submit Search
-          </Button>
-        </Box>
-        <PreparableRecipesTable rows={filteredPreparableRecipes} />
-
+        <Toolbar/>
+        <Typography variant="h6" gutterBottom>
+          Your Preparable Recipes
+        </Typography>
+        <PreparableRecipesTable/>
         <Typography variant="h6" gutterBottom style={{ marginTop: '50px' }}>
           All Your Saved Recipes
         </Typography>
-        <TextField
-          label="Search All Saved Recipes"
-          variant="outlined"
-          fullWidth
-          value={searchSavedRecipesQuery}
-          onChange={(e) => setSearchSavedRecipesQuery(e.target.value)}
-          sx={{ marginBottom: 2, backgroundColor: 'white', borderRadius: 1 }}
-        />
-        {/* Submit Button */}
-        <Box sx={{ textAlign: 'center' }}>
-          <Button
-            variant="contained"
-            onClick={handleSearchSubmitS}
-            sx={{ width: '60%', marginBottom: 2, backgroundColor: '#4CAF50'}}
-          >
-            Submit Search
-          </Button>
-        </Box>
-        <SavedRecipesTable rows={filteredSavedRecipes} />
+        <SavedRecipesTable/>
       </Box>
     </Box>
   );
