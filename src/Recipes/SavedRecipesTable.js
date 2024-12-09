@@ -71,14 +71,14 @@ export default function EventsGrid() {
 
   // BACKEND: refer to 'field' variable
 const columns = [
-  { field: 'name', headerName: 'Recipe Name', width: 400 },
-  { field: 'type', headerName: 'Type of Recipe', width: 400 },
-  { field: 'cuisine', headerName: 'Cuisine', width: 350 },
+  { field: 'name', headerName: 'Recipe Name', width: 250 },
+  { field: 'type', headerName: 'Type of Recipe', width: 175 },
+  { field: 'cuisine', headerName: 'Cuisine', width: 175 },
   { field: 'ingredients', headerName: 'Ingredients', width: 350 },
   { field: 'preparable', headerName: 'Preparable?', width: 125 },
   // Add a column for adding buttons to view recipe
   {
-    field: 'detial',
+    field: 'view',
     headerName: 'View Recipe',
     width: 150,
     renderCell: (params) => (
@@ -200,6 +200,9 @@ const columns = [
         rows={rows}
         columns={columns}
         initialState={{
+          sorting: {
+            sortModel: [{ field: 'preparable', sort: 'desc' }], // Default show preparable recipes first
+          },
           pagination: {
             paginationModel: {
               pageSize: 10,
