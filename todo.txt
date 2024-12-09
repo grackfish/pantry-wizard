@@ -5,7 +5,7 @@
 - Need to test adding recipes and ingredients to the owned recipes
   and saved ingredients tables with backend populated data
 
-(- low prio: we do not need separate tables for preparable recipes vsall saved recipes,
+(- low prio: we do not need separate tables for preparable recipes vs all saved recipes,
    we can just set default sorting to show preparable recipes at the top of the table)
-   
+
 (- super low prio: move table with all website ingredients to explore tab)
