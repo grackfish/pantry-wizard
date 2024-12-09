@@ -13,9 +13,11 @@ import { Form } from 'react-router-dom';
 
 // BACKEND: refer to 'field' variable
 const columns = [
-  { field: 'name', headerName: 'Recipe Name', width: 400 },
-  { field: 'type', headerName: 'Type of Recipe', width: 400 },
-  { field: 'cuisine', headerName: 'Cuisine', width: 350 },
+  { field: 'name', headerName: 'Recipe Name', width: 325 },
+  { field: 'type', headerName: 'Type of Recipe', width: 175 },
+  { field: 'cuisine', headerName: 'Cuisine', width: 175 },
+  { field: 'ingredients', headerName: 'Ingredients', width: 375 },
+  { field: 'preparable', headerName: 'Preparable?', width: 100 },
 ];
 
 export default function EventsGrid() {

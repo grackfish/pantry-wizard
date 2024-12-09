@@ -4,10 +4,11 @@ import { DataGrid } from '@mui/x-data-grid';
 
 // BACKEND: refer to 'field' variable
 const columns = [
-  { field: 'name', headerName: 'Recipe Name', width: 350 },
-  { field: 'type', headerName: 'Type of Recipe', width: 325 },
-  { field: 'cuisine', headerName: 'Cuisine', width: 325 },
-  { field: 'canMake', headerName: 'Preparable?', width: 150 },
+  { field: 'name', headerName: 'Recipe Name', width: 325 },
+  { field: 'type', headerName: 'Type of Recipe', width: 175 },
+  { field: 'cuisine', headerName: 'Cuisine', width: 175 },
+  { field: 'ingredients', headerName: 'Ingredients', width: 375 },
+  { field: 'preparable', headerName: 'Preparable?', width: 100 },
 ];
 
 export default function EventsGrid() {
