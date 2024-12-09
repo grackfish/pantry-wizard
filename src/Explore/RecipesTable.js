@@ -13,8 +13,38 @@ const columns = [
 
 export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
+  const [selectedRows, setSelectedRows] = React.useState([]); // For selected rows
+
+  // Save selected ingredients
+  const handleSaveSelected = () => {
+    if (selectedRows.length === 0) {
+      alert('No recipes selected.');
+      return;
+    }
+    
+    return; // BACKEND TO-DO
+  };
 
   return (
+    <Box>
+      <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
+        {/* Save Recipes Button */}
+        <button
+          onClick={handleSaveSelected}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            borderRadius: '5px',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+          }}
+        >
+          Save Selected Recipes
+        </button>
+      </div>
+
     <Box sx={{ height: 631, width: '99%' }}>
       <DataGrid
         rows={rows}
@@ -31,6 +61,9 @@ export default function EventsGrid() {
         disableRowSelectionOnClick
         localeText={{
             noRowsLabel: 'No recipes on website. Databases haven\'t been populated yet',
+        }}
+        onRowSelectionModelChange={(newSelection) => {
+          setSelectedRows(newSelection); // Update the selected rows state
         }}
         sx={{
           '& .MuiDataGrid-cell': {
@@ -82,6 +115,7 @@ export default function EventsGrid() {
           },
         }}
       />
+    </Box>
     </Box>
   );
 }
