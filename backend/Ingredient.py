@@ -45,5 +45,5 @@ class Ingredient:
             "id" : self.name,
             "name" : self.name,
             "amount" : str(self.quantity) + " " + self.units,
-            "expiration" : self.intakeTime + timedelta(self.shelfLife)
+            "expiration" : (self.intakeTime + timedelta(self.shelfLife)).isoformat()
         }

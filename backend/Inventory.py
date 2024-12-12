@@ -14,22 +14,23 @@ class Inventory:
         if ingredient_name in self.ingredients:
             new_quantity = ingredient.getQuantity() + self.ingredients[ingredient_name].getQuantity()
             self.ingredients[ingredient_name].setQuantity(new_quantity)
-            Database.updateIngredient(self.ingredients[ingredient_name])
+            return Database.updateIngredient(self.ingredients[ingredient_name])
         else:
             self.ingredients[ingredient_name] = ingredient
-            Database.addIngredient(ingredient)
+            return Database.addIngredient(ingredient)
         
     def removeIngredient(self, ingredient_name:str, quantity:int):
         try:
             new_quantity = max(self.ingredients[ingredient_name].getQuantity() - quantity, 0)
             if new_quantity == 0:
-                Database.removeIngredient(self.ingredients[ingredient_name])
+                result = Database.removeIngredient(self.ingredients[ingredient_name])
                 del self.ingredients[ingredient_name]
+                return result
             else:
                 self.ingredients[ingredient_name].setQuantity(new_quantity)
-                Database.updateIngredient(self.ingredients[ingredient_name])
+                return Database.updateIngredient(self.ingredients[ingredient_name])
         except Exception(KeyError):
-            print("Ingredient not found")
+            return False
             
     def getIngredients(self):
         return [i.toDict() for i in self.ingredients.values()]
