@@ -16,7 +16,7 @@ export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
 
   React.useEffect(() => {
-    axios.get('http://127.0.0.1:5000/pantry/')
+    axios.get('http://127.0.0.1:5000/pantry/get/')
         .then((response) => setRows(response.data.payload))
         .catch((error) => console.error(error));
 }, []);
@@ -78,7 +78,7 @@ export default function EventsGrid() {
    
 
   React.useEffect(() => {
-    axios.get('http://127.0.0.1:5000/pantry/')
+    axios.get('http://127.0.0.1:5000/pantry/get/')
         .then((response) => setRows(response.data.payload))
         .catch((error) => console.error(error));
 }, []);

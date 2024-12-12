@@ -11,9 +11,9 @@ USERID = 1
 inventory = Inventory(USERID)
 
 app = Flask(__name__)
-CORS(app=app, resources={r"*": {"origins": "*"}})  # Handle CORS issues during development
+CORS(app=app, resources={r"/*": {"origins": "/*"}})  # Handle CORS issues during development
 
-@app.route('/pantry/', methods=['GET'])
+@app.route('/pantry/get/', methods=['GET'])
 def get_data():
     return jsonify({'payload': inventory.getIngredients()})
 
