@@ -3,41 +3,50 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { Typography } from '@mui/material';
 import { Form } from 'react-router-dom';
+import axios from 'axios';
 
 const columns = [
   { field: 'name', headerName: 'Ingredient Name', width: 350 },
   { field: 'amount', headerName: 'Ingredient Amount', width: 300 },
-  { field: 'type', headerName: 'Ingredient Type', width: 300 },
+  // { field: 'type', headerName: 'Ingredient Type', width: 300 },
+  // { field: 'type', headerName: 'Ingredient Type', width: 350 },
   { field: 'expiration', headerName: 'Expiration', width: 200 },
 ];
 
 export default function EventsGrid() {
-  const [rows, setRows] = React.useState([
-    { id: 1, name: 'Carrot', amount: '5', type: 'Vegetable', expiration: '2024-12-31' },
-    { id: 2, name: 'Apple', amount: '10', type: 'Fruit', expiration: '2024-12-15' },
-    { id: 3, name: 'Milk', amount: '2 liters', type: 'Dairy', expiration: '2024-12-10' },
-    { id: 4, name: 'Chicken', amount: '3 kg', type: 'Meat', expiration: '2024-12-20' },
-    { id: 5, name: 'Cabbage', amount: '1', type: 'Vegetable', expiration: '2025-1-22' },
-    { id: 6, name: 'Orange', amount: '2', type: 'Fruit', expiration: '2024-12-15' },
-    { id: 7, name: 'Ketchup', amount: '1 liters', type: 'Condiments', expiration: '2024-12-02' },
-    { id: 8, name: 'Peas', amount: '3 kg', type: 'Vegetable', expiration: '2024-12-20' },
-    { id: 9, name: 'Salt', amount: '5', type: 'Condiment', expiration: '2024-12-31' },
-    { id: 10, name: 'Spaghetti', amount: '1 kg', type: 'Grains', expiration: '2024-12-15' },
-    { id: 11, name: 'Tomato', amount: '2', type: 'Vegetable', expiration: '2024-12-10' },
-    { id: 12, name: 'Potato', amount: '3', type: 'Vegetable', expiration: '2024-12-20' },
-    { id: 13, name: 'Lettuce', amount: '1', type: 'Vegetable', expiration: '2025-1-22' },
-    { id: 14, name: 'Spinach', amount: '2', type: 'Vegetable', expiration: '2024-12-15' },
-    { id: 15, name: 'Beef', amount: '1', type: 'Meat', expiration: '2024-12-02' },
-    { id: 16, name: 'Pork', amount: '3', type: 'Meat', expiration: '2024-12-20' },
-    { id: 17, name: 'Egg', amount: '12', type: 'Dairy', expiration: '2024-12-02' },
-    { id: 18, name: 'Bread', amount: '3', type: 'Grains', expiration: '2024-12-20' },
-    { id: 19, name: 'Flour', amount: '3 kg', type: 'Grains', expiration: '2024-12-20' },
-    { id: 20, name: 'Sugar', amount: '1 kg', type: 'Condiments', expiration: '2024-12-02' },
-    { id: 21, name: 'Butter', amount: '3', type: 'Dairy', expiration: '2024-12-20' },
-    { id: 22, name: 'Tea', amount: '10', type: 'Drink', expiration: '2024-12-20' },
-    { id: 23, name: 'Milk', amount: '1 gal', type: 'Drink', expiration: '2024-12-30' },
-    { id: 24, name: 'Cheddar cheese', amount: '1 lb', type: 'Dairy', expiration: '2024-12-11' },
-  ]);
+  // const [rows, setRows] = React.useState([
+  //   { id: 1, name: 'Carrot', amount: '5', type: 'Vegetable', expiration: '2024-12-31' },
+  //   { id: 2, name: 'Apple', amount: '10', type: 'Fruit', expiration: '2024-12-15' },
+  //   { id: 3, name: 'Milk', amount: '2 liters', type: 'Dairy', expiration: '2024-12-10' },
+  //   { id: 4, name: 'Chicken', amount: '3 kg', type: 'Meat', expiration: '2024-12-20' },
+  //   { id: 5, name: 'Cabbage', amount: '1', type: 'Vegetable', expiration: '2025-1-22' },
+  //   { id: 6, name: 'Orange', amount: '2', type: 'Fruit', expiration: '2024-12-15' },
+  //   { id: 7, name: 'Ketchup', amount: '1 liters', type: 'Condiments', expiration: '2024-12-02' },
+  //   { id: 8, name: 'Peas', amount: '3 kg', type: 'Vegetable', expiration: '2024-12-20' },
+  //   { id: 9, name: 'Salt', amount: '5', type: 'Condiment', expiration: '2024-12-31' },
+  //   { id: 10, name: 'Spaghetti', amount: '1 kg', type: 'Grains', expiration: '2024-12-15' },
+  //   { id: 11, name: 'Tomato', amount: '2', type: 'Vegetable', expiration: '2024-12-10' },
+  //   { id: 12, name: 'Potato', amount: '3', type: 'Vegetable', expiration: '2024-12-20' },
+  //   { id: 13, name: 'Lettuce', amount: '1', type: 'Vegetable', expiration: '2025-1-22' },
+  //   { id: 14, name: 'Spinach', amount: '2', type: 'Vegetable', expiration: '2024-12-15' },
+  //   { id: 15, name: 'Beef', amount: '1', type: 'Meat', expiration: '2024-12-02' },
+  //   { id: 16, name: 'Pork', amount: '3', type: 'Meat', expiration: '2024-12-20' },
+  //   { id: 17, name: 'Egg', amount: '12', type: 'Dairy', expiration: '2024-12-02' },
+  //   { id: 18, name: 'Bread', amount: '3', type: 'Grains', expiration: '2024-12-20' },
+  //   { id: 19, name: 'Flour', amount: '3 kg', type: 'Grains', expiration: '2024-12-20' },
+  //   { id: 20, name: 'Sugar', amount: '1 kg', type: 'Condiments', expiration: '2024-12-02' },
+  //   { id: 21, name: 'Butter', amount: '3', type: 'Dairy', expiration: '2024-12-20' },
+  //   { id: 22, name: 'Tea', amount: '10', type: 'Drink', expiration: '2024-12-20' },
+  //   { id: 23, name: 'Milk', amount: '1 gal', type: 'Drink', expiration: '2024-12-30' },
+  //   { id: 24, name: 'Cheddar cheese', amount: '1 lb', type: 'Dairy', expiration: '2024-12-11' },
+  // ]);
+  const [rows, setRows] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('http://127.0.0.1:5000/ingredients/')
+        .then((response) => setRows(response.data.payload))
+        .catch((error) => console.error(error));
+}, []);
   const [ingredientInput, setIngredientInput] = React.useState({ name: '', amount: '', type: '', expiration:'' });  // Allowing user to input ingredient data
   const [showForm, setShowForm] = React.useState(false); // Control visibility of adding ingredient form 
   const [selectedRows, setSelectedRows] = React.useState([]); // For removing selected rows
@@ -75,6 +84,13 @@ export default function EventsGrid() {
   };
 
    
+
+  React.useEffect(() => {
+    axios.get('http://127.0.0.1:5000/ingredients/')
+        .then((response) => setRows(response.data.payload))
+        .catch((error) => console.error(error));
+}, []);
+
 
   return (
     <Box>

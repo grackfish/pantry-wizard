@@ -3,6 +3,8 @@ import os
 import mysql.connector
 from dotenv import load_dotenv
 from Ingredient import Ingredient
+from Recipe import Recipe
+import json
 
 # Connects to the database
 def connectDatabase():
@@ -67,24 +69,43 @@ def updateUser(username:str, new_password:str):
     db.close()
     return success
 
-def getRecipes():
+def getRecipes() ->list[Recipe]:
     db = connectDatabase()
     with db.cursor() as cursor:
-        pass
+        query = (
+            "SELECT * FROM RECIPES"
+        )
+        cursor.execute(query)
+        rows = cursor.fetchall()
     db.close()
+    return [Recipe(id=id,
+                   name=name,
+                   ingredients=json.loads(ingredients),
+                   instructions=instructions,
+                   creatorID=creator_id,
+                   cuisine=cuisine,
+                   dishType=dishType
+                ) 
+            for id, name, ingredients, instructions, creator_id, cuisine, dishType in rows]
 
-def addRecipe():
+def addRecipe(name:str, creatorID:int, ingredients:dict[str, int], cuisine:str, dishType:str, instructions:str):
     db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        add_ingredient = (
+            "INSERT INTO RECIPES "
+            "(name, ingredients, instructions, creator, cuisine, type) "
+            "VALUES (%s, %s, %s, %s, %s, %s)"
+        )
+        ingredients_json = json.dumps(ingredients)
+        data = (name, ingredients_json, instructions, creatorID, cuisine, dishType)
+        try:
+            cursor.execute(add_ingredient, data)
+            db.commit()
+        except:
+            success = False
     db.close()
-
-def updateRecipe():
-    db = connectDatabase()
-    db.close()
-
-def removeRecipe():
-    db = connectDatabase()
-    db.close()
-
+    return success
 
 def getIngredients(user_id):
     db = connectDatabase()

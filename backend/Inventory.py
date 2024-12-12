@@ -1,6 +1,7 @@
 import Database
 from Ingredient import Ingredient
 from datetime import date
+from SearchResult import SearchResult
 
 class Inventory:
     def __init__(self, user_id):
@@ -31,7 +32,7 @@ class Inventory:
             print("Ingredient not found")
             
     def getIngredients(self):
-        return [(i, self.ingredients[i].getQuantity()) for i in self.ingredients]
+        return [i.toDict() for i in self.ingredients.values()]
     
     # initial load of the inventory -- populates self.ingredients
     def loadInventory(self):
@@ -41,8 +42,7 @@ class Inventory:
         for name, owner, amt, unit, shelfLife, intakeDate in ingredients:
             self.ingredients[name] = Ingredient(name=name, owner_id=owner, quantity=int(amt), unit=unit, shelfLife=shelfLife, intakeTime=intakeDate)
         
-        
-    def checkExpiration(self):
+    def checkExpiration(self)->tuple[list[Ingredient], list[Ingredient]]:
         today = date.today()
         warning = []
         removed = []
@@ -56,3 +56,19 @@ class Inventory:
         for ingredient in removed:
             self.removeIngredient(ingredient_name=ingredient.name, quantity=ingredient.quantity)
         return removed, warning
+
+    def searchRecipes(self, filters = None) -> SearchResult:
+        recipes = Database.getRecipes()
+        out = []
+        for recipe in recipes:
+            # Check if recipe should be filtered
+            if filters:
+                print("checking filters!")
+            out.append(recipe)
+            for ingredient, amount in recipe.getIngredients().items():
+                # Check if we have sufficient ingredients
+                if ingredient not in self.ingredients or self.ingredients[ingredient].getQuantity() < amount:
+                    out.pop()
+                break
+        return SearchResult(out, filters)
+        

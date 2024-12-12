@@ -3,12 +3,13 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { Typography, TextField } from '@mui/material';
 import { Form } from 'react-router-dom';
+import axios from 'axios';
 
 // BACKEND: refer to 'field' variable
 const columns = [
   { field: 'name', headerName: 'Ingredient Name', width: 350 },
-  { field: 'amount', headerName: 'Ingredient Amount', width: 300 },
-  { field: 'type', headerName: 'Ingredient Type', width: 300 },
+  { field: 'amount', headerName: 'Ingredient Amount', width: 400 },
+  // { field: 'type', headerName: 'Ingredient Type', width: 300 },
   { field: 'expiration', headerName: 'Expiration', width: 200 },
 ];
 
