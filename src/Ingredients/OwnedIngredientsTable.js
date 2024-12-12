@@ -2,16 +2,25 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import { Form } from 'react-router-dom';
+import axios from 'axios';
 
 // BACKEND: refer to 'field' variable
 const columns = [
   { field: 'name', headerName: 'Ingredient Name', width: 400 },
   { field: 'amount', headerName: 'Ingredient Amount', width: 400 },
-  { field: 'type', headerName: 'Ingredient Type', width: 350 },
+  // { field: 'type', headerName: 'Ingredient Type', width: 350 },
+  { field: 'expiration', headerName: 'Expiration', width: 200 },
 ];
 
 export default function EventsGrid() {
   const [rows, setRows] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('http://127.0.0.1:5000/ingredients/')
+        .then((response) => setRows(response.data.payload))
+        .catch((error) => console.error(error));
+}, []);
+
 
   return (
     <Box sx={{ height: 631, width: '99%' }}>
