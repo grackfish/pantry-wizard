@@ -4,6 +4,7 @@ import mysql.connector
 from dotenv import load_dotenv
 from Ingredient import Ingredient
 from Recipe import Recipe
+import json
 
 # Connects to the database
 def connectDatabase():
@@ -68,7 +69,7 @@ def updateUser(username:str, new_password:str):
     db.close()
     return success
 
-def getRecipes():
+def getRecipes() ->list[Recipe]:
     db = connectDatabase()
     with db.cursor() as cursor:
         query = (
@@ -77,7 +78,15 @@ def getRecipes():
         cursor.execute(query)
         rows = cursor.fetchall()
     db.close()
-    return None if not rows else rows
+    return [Recipe(id=id,
+                   name=name,
+                   ingredients=json.loads(ingredients),
+                   instructions=instructions,
+                   creatorID=creator_id,
+                   cuisine=cuisine,
+                   dishType=dishType
+                ) 
+            for id, name, ingredients, instructions, creator_id, cuisine, dishType in rows]
 
 def addRecipe(name:str, creatorID:int, ingredients:dict[str, int], cuisine:str, dishType:str, instructions:str):
     db = connectDatabase()
@@ -88,9 +97,8 @@ def addRecipe(name:str, creatorID:int, ingredients:dict[str, int], cuisine:str, 
             "(name, ingredients, instructions, creator, cuisine, type) "
             "VALUES (%s, %s, %s, %s, %s, %s)"
         )
-        i = ["\"" + x + "\"" + ":"+ str(ingredients[x]) for x in ingredients]
-        json = "{" + ",".join(i) + "}"
-        data = (name, json, instructions, creatorID, cuisine, dishType)
+        ingredients_json = json.dumps(ingredients)
+        data = (name, ingredients_json, instructions, creatorID, cuisine, dishType)
         try:
             cursor.execute(add_ingredient, data)
             db.commit()
@@ -163,5 +171,3 @@ def removeIngredient(ingredient:Ingredient):
             success = False
     db.close()
     return success
-
-print(getRecipes())

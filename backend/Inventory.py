@@ -1,6 +1,7 @@
 import Database
 from Ingredient import Ingredient
 from datetime import date
+from SearchResult import SearchResult
 
 class Inventory:
     def __init__(self, user_id):
@@ -41,7 +42,7 @@ class Inventory:
         for name, owner, amt, unit, shelfLife, intakeDate in ingredients:
             self.ingredients[name] = Ingredient(name=name, owner_id=owner, quantity=int(amt), unit=unit, shelfLife=shelfLife, intakeTime=intakeDate)
         
-    def checkExpiration(self):
+    def checkExpiration(self)->tuple[list[Ingredient], list[Ingredient]]:
         today = date.today()
         warning = []
         removed = []
@@ -56,25 +57,17 @@ class Inventory:
             self.removeIngredient(ingredient_name=ingredient.name, quantity=ingredient.quantity)
         return removed, warning
 
-    def searchRecipes(self):
+    def searchRecipes(self, filters:dict) -> SearchResult:
         recipes = Database.getRecipes()
         out = []
-        for _, name, ingredients, instructions, _, cuisine, dishType in recipes:
-            ingredients = ingredients.strip("{}")
-            pairs = ingredients.split(",")
-            d = dict()
-            for p in pairs:
-                left, right = p.split(":")
-                left = left.strip()
-                left = left.strip("\"")
-                right = right.strip()
-                right = right.strip("\"")
-                right = right.strip()
-                d[left] = int(right)
-            out.append([name, ingredients, instructions, cuisine, dishType])
-            for k in d:
-                if k not in self.ingredients or self.ingredients[k].getQuantity() < d[k]:
+        for recipe in recipes:
+            # Check if recipe should be filtered
+            
+            out.append(recipe)
+            for ingredient, amount in recipe.getIngredients().items():
+                # Check if we have sufficient ingredients
+                if ingredient not in self.ingredients or self.ingredients[ingredient].getQuantity() < amount:
                     out.pop()
-                    break
-        return out
+                break
+        return SearchResult(out, filters)
         
