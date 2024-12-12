@@ -13,8 +13,6 @@ CORS(app)  # Handle CORS issues during development
 
 @app.route('/ingredients/', methods=['GET'])
 def get_data():
-    print("notification receieved!")
-    print(inventory.getIngredients())
     return jsonify({'payload': inventory.getIngredients()})
 
 # @app.route('/api/data', methods=['POST'])
