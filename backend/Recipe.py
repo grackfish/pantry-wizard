@@ -29,9 +29,8 @@ class Recipe:
     def getInstructions(self):
         return self.instructions
     
-    # Formatted string representation of a Recipe for debug purposes
-    def __str__(self):
-        qualities = {
+    def toDict(self):
+        return {
             "id" : self.id,
             "name" : self.name,
             "creator" : self.creatorID,
@@ -40,5 +39,9 @@ class Recipe:
             "cuisine" : self.cuisine,
             "dish type" : self.type            
         }
+    
+    # Formatted string representation of a Recipe for debug purposes
+    def __str__(self):
+        qualities = self.toDict()
         a = [x + ": " + str(qualities[x]) for x in qualities]
         return "\n".join(a)

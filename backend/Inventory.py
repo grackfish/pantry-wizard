@@ -58,18 +58,16 @@ class Inventory:
             self.removeIngredient(ingredient_name=ingredient.name, quantity=ingredient.quantity)
         return removed, warning
 
-    def searchRecipes(self, filters = None) -> SearchResult:
-        recipes = Database.getRecipes()
-        out = []
+    def searchRecipes(self, inverse=False, filters = None) -> tuple[SearchResult, SearchResult]:
+        recipes = Database.getRecipes(self.userid, inverse)
+        makeable = []
+        unmakeable = []
         for recipe in recipes:
-            # Check if recipe should be filtered
-            if filters:
-                print("checking filters!")
-            out.append(recipe)
+            makeable.append(recipe)
             for ingredient, amount in recipe.getIngredients().items():
                 # Check if we have sufficient ingredients
                 if ingredient not in self.ingredients or self.ingredients[ingredient].getQuantity() < amount:
-                    out.pop()
-                break
-        return SearchResult(out, filters)
+                    unmakeable.append(makeable.pop())
+                    break
+        return SearchResult(makeable, filters), SearchResult(unmakeable, filters)
         

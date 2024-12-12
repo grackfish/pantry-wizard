@@ -30,7 +30,7 @@ def getUser(username:str, password:str):
         rows = cursor.fetchall()
     db.close()
     return None if not rows else rows[0]
-    
+
 # Returns True if the user is successfully registered else False
 def addUser(username:str, password:str):
     db = connectDatabase()
@@ -69,11 +69,11 @@ def updateUser(username:str, new_password:str):
     db.close()
     return success
 
-def getRecipes() ->list[Recipe]:
+def getRecipes(user_id, inverse=False) ->list[Recipe]:
     db = connectDatabase()
     with db.cursor() as cursor:
         query = (
-            "SELECT * FROM RECIPES"
+            "SELECT * FROM RECIPES WHERE creator" + ("!" if inverse else "") + "=" + str(user_id)
         )
         cursor.execute(query)
         rows = cursor.fetchall()
@@ -91,6 +91,7 @@ def getRecipes() ->list[Recipe]:
 def addRecipe(name:str, creatorID:int, ingredients:dict[str, int], cuisine:str, dishType:str, instructions:str):
     db = connectDatabase()
     success = True
+    new_id = -1
     with db.cursor() as cursor:
         add_ingredient = (
             "INSERT INTO RECIPES "
@@ -102,8 +103,38 @@ def addRecipe(name:str, creatorID:int, ingredients:dict[str, int], cuisine:str, 
         try:
             cursor.execute(add_ingredient, data)
             db.commit()
+            query = (
+                "SELECT * FROM RECIPES WHERE "
+                "name=%s AND "
+                "ingredients = %s AND "
+                "instructions = %s AND "
+                "creator=%s AND "
+                "cuisine=%s AND "
+                "type=%s"
+            )
+            cursor.execute(query, data)
+            rows = cursor.fetchall()
+            if rows:
+                new_id = rows[0][0]
         except:
             success = False
+    db.close()
+    return success, new_id
+
+def updateRecipe(recipe_id:int, new_id:int):
+    db = connectDatabase()
+    success = True
+    with db.cursor() as cursor:
+        update_recipe = (
+            "UPDATE RECIPES "
+            "SET creator=" + str(new_id) +
+            " WHERE id=" + str(recipe_id) + ";"
+        )
+        # try:
+        cursor.execute(update_recipe)
+        db.commit()
+        # except Exception:
+            # success = False
     db.close()
     return success
 
