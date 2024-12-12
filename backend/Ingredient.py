@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 class Ingredient:
     def __init__(self, name:str, owner_id:int, quantity:int, unit:str, shelfLife:int, intakeTime:date):
@@ -39,4 +39,11 @@ class Ingredient:
             self.shelfLife,
             self.intakeTime
         )
-    
+        
+    def toDict(self):
+        return {
+            "id" : self.name,
+            "name" : self.name,
+            "amount" : str(self.quantity) + " " + self.units,
+            "expiration" : (self.intakeTime + timedelta(self.shelfLife)).isoformat()
+        }
